@@ -51,3 +51,56 @@ export default function Counter() {
 }
 
 ```
+
+---
+
+## **useToggle Hook**
+
+`useToggle – Custom Hook`
+
+```jsx
+import { useState } from "react";
+
+function useToggle(toggleArg = false) {
+  const [toggle, setToggle] = useState(toggleArg); // State yaratish
+
+  const changeToggle = () => setToggle((prev) => !prev); // Toggle funksiyasi
+
+  return { toggle, changeToggle }; // Qiymat va funksiyani qaytarish
+}
+
+export default useToggle;
+```
+
+- `useState` yordamida `toggle` nomli state yaratadi. Dastlabki qiymati `toggleArg` (standart false).
+- `changeToggle` funksiyasi state-ni oldingi `(prev)` qiymatining teskari holatiga `(true yoki false)` o‘zgartiradi.
+- Hook `{ toggle, changeToggle }` obyektini qaytaradi, bu esa komponent ichida ishlatiladi.
+
+```jsx
+import React from "react";
+import useToggle from "../hooks/useToggle"; // Custom hookni import qilish
+
+export default function ToggleContent() {
+  const { toggle, changeToggle } = useToggle(false); // Hookni chaqirish
+
+  return (
+    <div className="p-20">
+      <button className="btn bg-blue-800" onClick={changeToggle}>
+        {toggle ? "Hide" : "Show"}
+      </button>
+      {toggle ? (
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis
+          sapiente corrupti recusandae magni, neque commodi sint, autem vel,
+          porro et dicta omnis deserunt laudantium aperiam odio velit?
+          Veritatis, nostrum dignissimos.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+```
+
+- `useToggle(false)` ni chaqirib, `toggle` va `changeToggle` o‘zgaruvchilarini oladi.
+- Tugma bosilganda `changeToggle` chaqiriladi va `toggle` qiymati `true/false` ga o‘zgaradi.
+- Agar `toggle === true` bo‘lsa, `<p>` elementi ko‘rinadi, aks holda yo‘qoladi.
